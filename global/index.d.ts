@@ -611,8 +611,15 @@ declare namespace browser.management {
         // unsupported: versionName: string,
     };
 
+    function getAll(): Promise<ExtensionInfo[]>;
+    function get(): Promise<ExtensionInfo>;
     function getSelf(): Promise<ExtensionInfo>;
     function uninstallSelf(options: { showConfirmDialog: boolean, dialogMessage: string }): Promise<void>;
+    
+    const onInstalled: Listener<ExtensionInfo>;
+    const onUninstalled: Listener<ExtensionInfo>;
+    const onEnabled: Listener<ExtensionInfo>;
+    const onDisabled: Listener<ExtensionInfo>;
 }
 
 declare namespace browser.notifications {
