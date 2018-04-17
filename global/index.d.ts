@@ -129,6 +129,15 @@ declare namespace browser.browserAction {
     const onClicked: Listener<browser.tabs.Tab>;
 }
 
+
+declare namespace browser.browserSettings {
+    type levelOfControl =
+        "not_controllable" | 
+        "controlled_by_other_extensions" | 
+        "controllable_by_this_extension" | 
+        "controlled_by_this_extension";
+}
+
 declare namespace browser.browsingData {
     type DataTypeSet = {
         cache?: boolean,
@@ -720,6 +729,19 @@ declare namespace browser.permissions {
     // const onRemoved: Listener<Permissions>;
 }
 
+declare namespace browser.privacy {
+    namespace network {
+        type networkPredictionEnabled = browser.types.BrowserSetting<boolean>;
+        type peerConnectionEnabled = browser.types.BrowserSetting<boolean>;
+        type webRTCIPHandlingPolicy = browser.types.BrowserSetting<            
+            "default" |
+            "default_public_and_private_interfaces" |
+            "default_public_interface_only" |
+            "disable_non_proxied_udp"
+        >;
+    }
+}
+
 declare namespace browser.runtime {
     const lastError: string | null;
     const id: string;
@@ -1148,6 +1170,24 @@ declare namespace browser.topSites {
         url: string,
     };
     function get(): Promise<MostVisitedURL[]>;
+}
+
+declare namespace browser.types {
+    type BrowserSetting<T = any> = {
+        get(details: {}): Promise<{
+            value: T,
+            levelOfControl: browser.browserSettings.levelOfControl,
+        }>;
+        set(details: {
+            value: T,
+        }): Promise<boolean>;
+        clear(details: {}): Promise<boolean>;
+        
+        onChanged: EvListener<(details: {
+            value: T,
+            levelOfControl: browser.browserSettings.levelOfControl,
+        }) => void>;
+    }
 }
 
 declare namespace browser.webNavigation {
