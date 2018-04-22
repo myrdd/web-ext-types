@@ -730,10 +730,10 @@ declare namespace browser.permissions {
 }
 
 declare namespace browser.privacy {
-    namespace network {
-        type networkPredictionEnabled = browser.types.BrowserSetting<boolean>;
-        type peerConnectionEnabled = browser.types.BrowserSetting<boolean>;
-        type webRTCIPHandlingPolicy = browser.types.BrowserSetting<            
+    interface network {
+        networkPredictionEnabled: browser.types.BrowserSetting<boolean>;
+        peerConnectionEnabled: browser.types.BrowserSetting<boolean>;
+        webRTCIPHandlingPolicy: browser.types.BrowserSetting<
             "default" |
             "default_public_and_private_interfaces" |
             "default_public_interface_only" |
